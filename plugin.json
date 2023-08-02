@@ -1,8 +1,8 @@
 {
-  "id": "nodebb-plugin-math-captcha",
+  "id": "nodebb-plugin-captcha-canvas",
   "name": "NodeBB Ban Privileges",
   "description": "Give account ban privilieges to a group.",
-  "url": "https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha",
+  "url": "https://github.com/idX401/nodebb-plugin-captcha-canvas",
   "library": "./src/library.js",
   "hooks": [
     { "hook": "static:app.load", "method": "init" },
