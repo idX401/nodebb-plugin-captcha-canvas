@@ -1,0 +1,20 @@
+{
+  "id": "nodebb-plugin-math-captcha",
+  "name": "NodeBB Ban Privileges",
+  "description": "Give account ban privilieges to a group.",
+  "url": "https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha",
+  "library": "./src/library.js",
+  "hooks": [
+    { "hook": "static:app.load", "method": "init" },
+    { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
+    { "hook": "filter:register.build", "method": "addCaptcha" },
+    { "hook": "filter:register.check", "method": "checkRegistration" },
+    { "hook": "action:nodebb-plugin-prometheus.init", "method": "initPrometheus" }
+  ],
+  "scripts": [
+    "./public/js/main.js"
+  ],
+  "languages": "./languages",
+  "defaultLang": "en-GB",
+  "templates": "./public/templates"
+}

@@ -1,0 +1,34 @@
+{
+  "name": "nodebb-plugin-math-captcha",
+  "version": "0.4.0",
+  "description": "Adds a simple mathematical problem to the registration process.",
+  "main": "./src/library.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "captcha",
+    "spam",
+    "math",
+    "formula",
+    "calculation",
+    "simple",
+    "bots",
+    "defence"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha/issues"
+  },
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "async": "^3.2.4",
+    "uuid": "^9.0.0"
+  },
+  "nbbpm": {
+    "compatibility": "^3.0.0"
+  }
+}
