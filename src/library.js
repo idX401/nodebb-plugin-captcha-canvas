@@ -101,10 +101,6 @@ plugin.addCaptcha = function (data, callback) {
             '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-captcha-canvas:solve]]<span>' + results.invalid[0] + '</span></span>',
         styleName: uuidv4()
     };
-    console.log(data);
-    console.log(uuid, results);
-    console.log(captcha);
-
 
     if(data.templateData.regFormEntry && Array.isArray(data.templateData.regFormEntry)) {
         data.templateData.regFormEntry.push(captcha);
@@ -113,6 +109,10 @@ plugin.addCaptcha = function (data, callback) {
     } else {
         data.templateData.captcha = captcha;
     }
+
+    console.log(data);
+    console.log(uuid, results);
+    console.log(captcha);
     
     increaseCounter('created');
 
