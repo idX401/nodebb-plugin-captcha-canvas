@@ -81,46 +81,39 @@ plugin.addAdminNavigation = function (header, callback) {
 };
 
 plugin.addCaptcha = function (data, callback) {
-    async.doWhilst(
-        async.apply(async.parallel, {
-            invalid: createCaptcha,
-            valid: createCaptcha
-        }),
-        function (results, callback) {
-            callback(null, results.invalid[1] === results.valid[1]);
-        },
-        function (err, results) {
-            if(err) {
-                callback(err);
-                return;
-            }
+    let results;
+    results.invalid = []
+    results.valid = []
+    results.invalid.push('42');
+    results.valid.push('1+1')
+    results.valid.push('2')
+    let uuid = uuidv4();
+    
+    data.req.session["nodebb-plugin-captcha-canvas"] = {
+        uuid: uuid,
+        problem: results.valid[0],
+        solution: results.valid[1],
+        honeypotSolution: results.invalid[1]
+    };
 
-            let uuid = uuidv4();
+    let captcha = {
+        label: '[[nodebb-plugin-captcha-canvas:label]]',
+        html: '<input class="form-control" type="text" placeholder="[[nodebb-plugin-captcha-canvas:solution_placeholder]]" name="' + uuid + '" id="' + uuid + '" />' +
+            '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-captcha-canvas:solve]]<span>' + results.invalid[0] + '</span></span>',
+        styleName: uuidv4()
+    };
+    console.log(data);
+    console.log(uuid, results);
+    console.log(captcha);
+    if(data.templateData.regFormEntry && Array.isArray(data.templateData.regFormEntry)) {
+        data.templateData.regFormEntry.push(captcha);
+    } else {
+        data.templateData.captcha = captcha;
+    }
 
-            data.req.session["nodebb-plugin-captcha-canvas"] = {
-                uuid: uuid,
-                problem: results.valid[0],
-                solution: results.valid[1],
-                honeypotSolution: results.invalid[1]
-            };
+    increaseCounter('created');
 
-            let captcha = {
-                label: '[[nodebb-plugin-captcha-canvas:label]]',
-                html: '<input class="form-control" type="text" placeholder="[[nodebb-plugin-captcha-canvas:solution_placeholder]]" name="' + uuid + '" id="' + uuid + '" />' +
-                    '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-captcha-canvas:solve]]<span>' + results.invalid[0] + '</span></span>',
-                styleName: uuidv4()
-            };
-
-            if(data.templateData.regFormEntry && Array.isArray(data.templateData.regFormEntry)) {
-                data.templateData.regFormEntry.push(captcha);
-            } else {
-                data.templateData.captcha = captcha;
-            }
-
-            increaseCounter('created');
-
-            callback(null, data);
-        });
+    callback(null, data);
 };
 plugin.checkRegister = function (data, callback) {
     let sessionData = data.req.session["nodebb-plugin-captcha-canvas"];
