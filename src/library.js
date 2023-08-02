@@ -123,7 +123,7 @@ plugin.addCaptcha = function (data, callback) {
         });
 };
 
-plugin.checkRegistration = function (data, callback) {
+plugin.checkCaptcha = function (data, callback) {
     let sessionData = data.req.session["nodebb-plugin-captcha-canvas"];
 
     if(sessionData && sessionData.uuid && sessionData.solution && sessionData.honeypotSolution) {
