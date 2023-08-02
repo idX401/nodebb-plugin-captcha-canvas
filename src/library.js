@@ -102,8 +102,8 @@ plugin.addCaptcha = function (data, callback) {
 
     let captcha = {
         label: '[[nodebb-plugin-captcha-canvas:label]]',
-        html: '<input class="form-control" type="text" placeholder="[[nodebb-plugin-captcha-canvas:solution_placeholder]]" name="' + uuid + '" id="' + uuid + '" />' +
-            '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-captcha-canvas:solve]]<span>' + results.invalid[0] + '</span></span><img alt="cap" src="data:image/png;base64,'+imgBase64+'" />',
+        html: '<img id="img-' + uuid + '" alt="cap" src="data:image/png;base64,'+imgBase64+'" />'+
+            '<input class="form-control" type="text" placeholder="[[nodebb-plugin-captcha-canvas:solution_placeholder]]" name="' + uuid + '" id="' + uuid + '" />',
         styleName: uuidv4()
     };
 
