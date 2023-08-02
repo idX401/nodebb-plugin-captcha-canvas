@@ -84,7 +84,8 @@ plugin.addCaptcha = function (data, callback) {
     let results;
     results.invalid = []
     results.valid = []
-    results.invalid.push('42');
+    results.invalid.push('4+2');
+    results.invalid.push('6');
     results.valid.push('1+1')
     results.valid.push('2')
     let uuid = uuidv4();
