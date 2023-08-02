@@ -1,0 +1,16 @@
+{
+  "label": "Captcha",
+  "solve": "Enter the solution of the expression: ",
+  "solution_placeholder": "Solution",
+  "failed": "Your entered solution for the captcha was wrong!",
+  "admin_counter_name": "Counter name",
+  "admin_counter_value": "Score",
+  "admin_failures_session": "Invalid session",
+  "admin_failures_empty": "Empty solution",
+  "admin_failures_honeypot": "Honeypot solution",
+  "admin_failures_nan": "Non-integer solution",
+  "admin_failures_wrong": "Wrong solution",
+  "admin_total_failures_count": "Failures summary",
+  "admin_correct_count": "Correct solution",
+  "admin_created_count": "Created captcha"
+}
