@@ -80,7 +80,7 @@ plugin.addAdminNavigation = function (header, callback) {
     callback(null, header);
 };
 
-plugin.addCaptcha = function (data, callback) {
+plugin.addCaptchaRegister = function (data, callback) {
     async.doWhilst(
         async.apply(async.parallel, {
             invalid: createCaptcha,
@@ -122,8 +122,49 @@ plugin.addCaptcha = function (data, callback) {
             callback(null, data);
         });
 };
+plugin.addCaptchaLogin = function (data, callback) {
+    async.doWhilst(
+        async.apply(async.parallel, {
+            invalid: createCaptcha,
+            valid: createCaptcha
+        }),
+        function (results, callback) {
+            callback(null, results.invalid[1] === results.valid[1]);
+        },
+        function (err, results) {
+            if(err) {
+                callback(err);
+                return;
+            }
 
-plugin.checkCaptcha = function (data, callback) {
+            let uuid = uuidv4();
+
+            data.req.session["nodebb-plugin-captcha-canvas"] = {
+                uuid: uuid,
+                problem: results.valid[0],
+                solution: results.valid[1],
+                honeypotSolution: results.invalid[1]
+            };
+
+            let captcha = {
+                label: '[[nodebb-plugin-captcha-canvas:label]]',
+                html: '<input class="form-control" type="text" placeholder="[[nodebb-plugin-captcha-canvas:solution_placeholder]]" name="' + uuid + '" id="' + uuid + '" />' +
+                    '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-captcha-canvas:solve]]<span>' + results.invalid[0] + '</span></span>',
+                styleName: uuidv4()
+            };
+
+            if(data.templateData.regFormEntry && Array.isArray(data.templateData.regFormEntry)) {
+                data.templateData.regFormEntry.push(captcha);
+            } else {
+                data.templateData.captcha = captcha;
+            }
+
+            increaseCounter('created');
+
+            callback(null, data);
+        });
+};
+plugin.checkCaptchaRegister = function (data, callback) {
     let sessionData = data.req.session["nodebb-plugin-captcha-canvas"];
 
     if(sessionData && sessionData.uuid && sessionData.solution && sessionData.honeypotSolution) {
@@ -147,7 +188,30 @@ plugin.checkCaptcha = function (data, callback) {
 
     callback(new Error('[[nodebb-plugin-captcha-canvas:failed]]'));
 };
+plugin.checkCaptchaLogin = function (data, callback) {
+    let sessionData = data.req.session["nodebb-plugin-captcha-canvas"];
 
+    if(sessionData && sessionData.uuid && sessionData.solution && sessionData.honeypotSolution) {
+        let result = data.userData[sessionData.uuid];
+        if(result === sessionData.solution) {
+            increaseCounter('correct');
+            callback(null, data);
+            return;
+        } else if(result === '') {
+            increaseCounter('empty');
+        } else if(result === sessionData.honeypotSolution) {
+            increaseCounter('honeypot');
+        } else if(/^-?[0-9]+$/.test(result)) {
+            increaseCounter('wrong');
+        } else {
+            increaseCounter('not_a_number');
+        }
+    } else {
+        increaseCounter('invalid_session');
+    }
+
+    callback(new Error('[[nodebb-plugin-captcha-canvas:failed]]'));
+};
 
 function createCaptcha(callback) {
     crypto.randomBytes(3, function (err, buf) {
