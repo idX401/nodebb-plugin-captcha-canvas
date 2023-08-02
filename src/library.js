@@ -104,12 +104,20 @@ plugin.addCaptcha = function (data, callback) {
     console.log(data);
     console.log(uuid, results);
     console.log(captcha);
-    if(data.templateData.regFormEntry && Array.isArray(data.templateData.regFormEntry)) {
-        data.templateData.regFormEntry.push(captcha);
-    } else {
-        data.templateData.captcha = captcha;
-    }
 
+    if(data.url === '/register'){
+        if(data.templateData.regFormEntry && Array.isArray(data.templateData.regFormEntry)) {
+            data.templateData.regFormEntry.push(captcha);
+        } else {
+            data.templateData.captcha = captcha;
+        }
+    }else if(data.url === '/login'){
+        if(data.templateData.loginFormEntry && Array.isArray(data.templateData.loginFormEntry)) {
+            data.templateData.loginFormEntry.push(captcha);
+        } else {
+            data.templateData.captcha = captcha;
+        }
+    }
     increaseCounter('created');
 
     callback(null, data);
