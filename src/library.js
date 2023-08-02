@@ -81,9 +81,7 @@ plugin.addAdminNavigation = function (header, callback) {
 };
 
 plugin.addCaptcha = function (data, callback) {
-    let results;
-    results.invalid = []
-    results.valid = []
+    let results = {"invalid": [], "valid": []};
     results.invalid.push('4+2');
     results.invalid.push('6');
     results.valid.push('1+1')
