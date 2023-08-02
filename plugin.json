@@ -7,10 +7,10 @@
   "hooks": [
     { "hook": "static:app.load", "method": "init" },
     { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
-    { "hook": "filter:register.build", "method": "addCaptchaRegister" },
-    { "hook": "filter:register.check", "method": "checkCaptchaRegister" },
-    { "hook": "filter:auth.build", "method": "addCaptchaLogin" },
-    { "hook": "filter:login.check", "method": "checkCaptchaLogin" },
+    { "hook": "filter:register.build", "method": "addCaptchaRegister", "priority": 5 },
+    { "hook": "filter:register.check", "method": "checkCaptchaRegister", "priority": 5 },
+    { "hook": "filter:login.build", "method": "addCaptchaLogin", "priority": 5 },
+    { "hook": "filter:login.check", "method": "checkCaptchaLogin", "priority": 5 },
     { "hook": "action:nodebb-plugin-prometheus.init", "method": "initPrometheus" }
   ],
   "scripts": [
