@@ -19,7 +19,7 @@ plugin.init = function(params, callback) {
     params.router.get('/api/admin/captcha-canvas', renderAdmin);
 
     let socketPlugins = require.main.require('./src/socket.io/plugins');
-    socketPlugins.mathCaptcha = {
+    socketPlugins.canvasCaptcha = {
         getProblem: function(socket, params, callback) {
             db.sessionStore.get(socket.request.signedCookies[nconf.get('sessionKey')], function (err, sessionData) {
                 sessionData = sessionData && sessionData["nodebb-plugin-captcha-canvas"] || {
@@ -44,11 +44,11 @@ plugin.initPrometheus = function(params) {
 
         plugin.prometheus = {
             created: new params.prometheus.Counter({
-                name: 'nodebb_plugin_math_captcha_created_total',
+                name: 'nodebb_plugin_canvas_captcha_created_total',
                 help: 'Total created captcha'
             }),
             submitted: new params.prometheus.Counter({
-                name: 'nodebb_plugin_math_captcha_submitted_total',
+                name: 'nodebb_plugin_canvas_captcha_submitted_total',
                 help: 'Total submitted captcha (solution is either correct, invalid_session, not_a_number, wrong, honeypot or empty)',
                 labelNames: ['solution']
             })
@@ -74,7 +74,7 @@ plugin.addAdminNavigation = function (header, callback) {
     header.plugins.push({
         route: '/captcha-canvas',
         icon: 'fa-shield',
-        name: 'Math Captcha'
+        name: 'Canvas Captcha'
     });
 
     callback(null, header);
