@@ -15,14 +15,14 @@ let plugin = {};
 const possible_solutions = ['empty', 'honeypot', 'not_a_number', 'invalid_session', 'wrong', 'correct'];
 
 plugin.init = function(params, callback) {
-    params.router.get('/admin/math-captcha', params.middleware.admin.buildHeader, renderAdmin);
-    params.router.get('/api/admin/math-captcha', renderAdmin);
+    params.router.get('/admin/captcha-canvas', params.middleware.admin.buildHeader, renderAdmin);
+    params.router.get('/api/admin/captcha-canvas', renderAdmin);
 
     let socketPlugins = require.main.require('./src/socket.io/plugins');
     socketPlugins.mathCaptcha = {
         getProblem: function(socket, params, callback) {
             db.sessionStore.get(socket.request.signedCookies[nconf.get('sessionKey')], function (err, sessionData) {
-                sessionData = sessionData && sessionData["nodebb-plugin-math-captcha"] || {
+                sessionData = sessionData && sessionData["nodebb-plugin-captcha-canvas"] || {
                     uuid: 'x-error-no-session-x',
                     problem: '#error-no-session#'
                 };
@@ -36,9 +36,9 @@ plugin.init = function(params, callback) {
 };
 
 plugin.initPrometheus = function(params) {
-    db.getObject('nodebb-plugin-math-captcha:counters', function (err, counters) {
+    db.getObject('nodebb-plugin-captcha-canvas:counters', function (err, counters) {
         if(err) {
-            winston.error('[plugin/math-captcha] Failed to init prometheus: ' + err.message);
+            winston.error('[plugin/captcha-canvas] Failed to init prometheus: ' + err.message);
             return;
         }
 
@@ -72,7 +72,7 @@ plugin.initPrometheus = function(params) {
 
 plugin.addAdminNavigation = function (header, callback) {
     header.plugins.push({
-        route: '/math-captcha',
+        route: '/captcha-canvas',
         icon: 'fa-shield',
         name: 'Math Captcha'
     });
@@ -97,7 +97,7 @@ plugin.addCaptcha = function (data, callback) {
 
             let uuid = uuidv4();
 
-            data.req.session["nodebb-plugin-math-captcha"] = {
+            data.req.session["nodebb-plugin-captcha-canvas"] = {
                 uuid: uuid,
                 problem: results.valid[0],
                 solution: results.valid[1],
@@ -105,9 +105,9 @@ plugin.addCaptcha = function (data, callback) {
             };
 
             let captcha = {
-                label: '[[nodebb-plugin-math-captcha:label]]',
-                html: '<input class="form-control" type="text" placeholder="[[nodebb-plugin-math-captcha:solution_placeholder]]" name="' + uuid + '" id="' + uuid + '" />' +
-                    '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-math-captcha:solve]]<span>' + results.invalid[0] + '</span></span>',
+                label: '[[nodebb-plugin-captcha-canvas:label]]',
+                html: '<input class="form-control" type="text" placeholder="[[nodebb-plugin-captcha-canvas:solution_placeholder]]" name="' + uuid + '" id="' + uuid + '" />' +
+                    '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-captcha-canvas:solve]]<span>' + results.invalid[0] + '</span></span>',
                 styleName: uuidv4()
             };
 
@@ -124,7 +124,7 @@ plugin.addCaptcha = function (data, callback) {
 };
 
 plugin.checkRegistration = function (data, callback) {
-    let sessionData = data.req.session["nodebb-plugin-math-captcha"];
+    let sessionData = data.req.session["nodebb-plugin-captcha-canvas"];
 
     if(sessionData && sessionData.uuid && sessionData.solution && sessionData.honeypotSolution) {
         let result = data.userData[sessionData.uuid];
@@ -145,7 +145,7 @@ plugin.checkRegistration = function (data, callback) {
         increaseCounter('invalid_session');
     }
 
-    callback(new Error('[[nodebb-plugin-math-captcha:failed]]'));
+    callback(new Error('[[nodebb-plugin-captcha-canvas:failed]]'));
 };
 
 
@@ -178,7 +178,7 @@ function createCaptcha(callback) {
 }
 
 function increaseCounter(type) {
-    db.incrObjectField('nodebb-plugin-math-captcha:counters', type);
+    db.incrObjectField('nodebb-plugin-captcha-canvas:counters', type);
 
     if(plugin.prometheus) {
         if(possible_solutions.indexOf(type) > -1) {
@@ -190,9 +190,9 @@ function increaseCounter(type) {
 }
 
 function renderAdmin(req, res) {
-    db.getObject('nodebb-plugin-math-captcha:counters', function (err, counters) {
+    db.getObject('nodebb-plugin-captcha-canvas:counters', function (err, counters) {
         if(err) {
-            winston.error('[plugin/math-captcha] Unable to retrieve counters: ' + err.message);
+            winston.error('[plugin/captcha-canvas] Unable to retrieve counters: ' + err.message);
             counters = {
                 empty: '#error#',
                 honeypot: '#error#',
@@ -233,7 +233,7 @@ function renderAdmin(req, res) {
                 + counters.invalid_session;
         }
 
-        res.render('admin/plugins/math-captcha', {
+        res.render('admin/plugins/captcha-canvas', {
             counters: counters
         });
     });
