@@ -1,6 +1,7 @@
 $(function() {
     $(window).on('action:ajaxify.end', function (evt, data) {
         console.log(data);
+        alert(data);
         if(data.tpl_url === 'register') {
             socket.emit('plugins.canvasCaptcha.getProblem', function (err, results) {
                 console.log(results);
