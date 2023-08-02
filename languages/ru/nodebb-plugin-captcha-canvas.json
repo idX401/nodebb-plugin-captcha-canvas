@@ -1,0 +1,15 @@
+{
+  "label": "Капча",
+  "solution_placeholder": "Текст с картинки",
+  "failed": "Введенное вами решение для капчи было неверным!",
+  "admin_counter_name": "Имя счетчика",
+  "admin_counter_value": "Счет",
+  "admin_failures_session": "Недействительный сеанс",
+  "admin_failures_empty": "Пустое решение",
+  "admin_failures_honeypot": "Honeypot решение",
+  "admin_failures_nan": "Не числовое решение",
+  "admin_failures_wrong": "Неправильное решение",
+  "admin_total_failures_count": "Итого не решенных",
+  "admin_correct_count": "Правильных решений",
+  "admin_created_count": "Созданных капч"
+}
