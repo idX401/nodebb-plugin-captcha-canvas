@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col">
         <div class="panel panel-default">
-            <div class="panel-heading">Math Captcha Failures Report</div>
+            <div class="panel-heading">Canvas Captcha Failures Report</div>
             <div class="panel-body">
                 <table class="table">
                     <thead>
