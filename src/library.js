@@ -118,7 +118,7 @@ plugin.addCaptcha = function (data, callback) {
 
     callback(null, data);
 };
-plugin.checkRegister = function (data, callback) {
+plugin.checkCaptcha = function (data, callback) {
     let sessionData = data.req.session["nodebb-plugin-captcha-canvas"];
 
     if(sessionData && sessionData.uuid && sessionData.solution && sessionData.honeypotSolution) {
@@ -131,35 +131,16 @@ plugin.checkRegister = function (data, callback) {
             increaseCounter('empty');
         } else if(result === sessionData.honeypotSolution) {
             increaseCounter('honeypot');
-        } else if(/^-?[0-9]+$/.test(result)) {
+        }else{
+            increaseCounter('wrong');
+        }
+        /*
+        else if(/^-?[0-9]+$/.test(result)) {
             increaseCounter('wrong');
         } else {
             increaseCounter('not_a_number');
         }
-    } else {
-        increaseCounter('invalid_session');
-    }
-
-    callback(new Error('[[nodebb-plugin-captcha-canvas:failed]]'));
-};
-plugin.checkLogin = function (data, callback) {
-    let sessionData = data.req.session["nodebb-plugin-captcha-canvas"];
-
-    if(sessionData && sessionData.uuid && sessionData.solution && sessionData.honeypotSolution) {
-        let result = data.userData[sessionData.uuid];
-        if(result === sessionData.solution) {
-            increaseCounter('correct');
-            callback(null, data);
-            return;
-        } else if(result === '') {
-            increaseCounter('empty');
-        } else if(result === sessionData.honeypotSolution) {
-            increaseCounter('honeypot');
-        } else if(/^-?[0-9]+$/.test(result)) {
-            increaseCounter('wrong');
-        } else {
-            increaseCounter('not_a_number');
-        }
+        */
     } else {
         increaseCounter('invalid_session');
     }
