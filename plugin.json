@@ -9,8 +9,8 @@
     { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
     {"hook": "filter:login.build", "method": "addCaptcha", "priority": 5},
     {"hook": "filter:register.build", "method": "addCaptcha", "priority": 5},
-    {"hook": "filter:login.check", "method": "checkLogin", "priority": 5},
-    {"hook": "filter:register.check", "method": "checkRegister", "priority": 5},
+    {"hook": "filter:login.check", "method": "checkCaptcha", "priority": 5},
+    {"hook": "filter:register.check", "method": "checkCaptcha", "priority": 5},
     { "hook": "action:nodebb-plugin-prometheus.init", "method": "initPrometheus" }
   ],
   "scripts": [
