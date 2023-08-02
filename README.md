@@ -1,4 +1,4 @@
-# nodebb-plugin-math-captcha
+# nodebb-plugin-captcha-canvas
 
 ![nodebb compatibility](https://packages.nodebb.org/api/v1/plugins/nodebb-plugin-math-captcha/compatibility.png)
 
