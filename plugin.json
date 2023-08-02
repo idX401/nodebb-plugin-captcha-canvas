@@ -8,7 +8,9 @@
     { "hook": "static:app.load", "method": "init" },
     { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
     { "hook": "filter:register.build", "method": "addCaptcha" },
-    { "hook": "filter:register.check", "method": "checkRegistration" },
+    { "hook": "filter:register.check", "method": "checkCaptcha" },
+    { "hook": "filter:login.build", "method": "addCaptcha" },
+    { "hook": "filter:login.check", "method": "checkCaptcha" },
     { "hook": "action:nodebb-plugin-prometheus.init", "method": "initPrometheus" }
   ],
   "scripts": [
