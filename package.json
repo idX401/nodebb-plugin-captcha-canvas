@@ -1,11 +1,11 @@
 {
-  "name": "nodebb-plugin-math-captcha",
+  "name": "nodebb-plugin-captcha-canvas",
   "version": "0.4.0",
   "description": "Adds a simple mathematical problem to the registration process.",
   "main": "./src/library.js",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha"
+    "url": "https://github.com/idX401/nodebb-plugin-captcha-canvas"
   },
   "keywords": [
     "nodebb",
@@ -21,7 +21,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha/issues"
+    "url": "https://github.com/idX401/nodebb-plugin-captcha-canvas/issues"
   },
   "readmeFilename": "README.md",
   "dependencies": {
