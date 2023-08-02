@@ -10,6 +10,8 @@ let db = require.main.require('./src/database');
 let nconf = require.main.require('nconf');
 let winston = require.main.require('winston');
 
+const { createCaptchaSync } = require('captcha-canvas');
+
 let plugin = {};
 
 const possible_solutions = ['empty', 'honeypot', 'not_a_number', 'invalid_session', 'wrong', 'correct'];
@@ -81,6 +83,9 @@ plugin.addAdminNavigation = function (header, callback) {
 };
 
 plugin.addCaptcha = function (data, callback) {
+    const { image, text } = createCaptchaSync(300, 100);
+    let imgBase64 = new Buffer(image).toString('base64');
+    
     let results = {"invalid": [], "valid": []};
     results.invalid.push('4+2');
     results.invalid.push('6');
@@ -90,15 +95,15 @@ plugin.addCaptcha = function (data, callback) {
     
     data.req.session["nodebb-plugin-captcha-canvas"] = {
         uuid: uuid,
-        problem: results.valid[0],
-        solution: results.valid[1],
-        honeypotSolution: results.invalid[1]
+        problem: ';)',
+        solution: text,
+        honeypotSolution: '1+1+1'
     };
 
     let captcha = {
         label: '[[nodebb-plugin-captcha-canvas:label]]',
         html: '<input class="form-control" type="text" placeholder="[[nodebb-plugin-captcha-canvas:solution_placeholder]]" name="' + uuid + '" id="' + uuid + '" />' +
-            '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-captcha-canvas:solve]]<span>' + results.invalid[0] + '</span></span>',
+            '<span class="form-text" id="form-text-for-' + uuid + '">[[nodebb-plugin-captcha-canvas:solve]]<span>' + results.invalid[0] + '</span></span><img alt="cap" src="data:image/png;base64,'+imgBase64+'" />',
         styleName: uuidv4()
     };
 
