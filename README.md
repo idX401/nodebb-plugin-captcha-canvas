@@ -1,16 +1,15 @@
 # nodebb-plugin-captcha-canvas
 
-![nodebb compatibility](https://packages.nodebb.org/api/v1/plugins/nodebb-plugin-math-captcha/compatibility.png)
+    npm i git+https://github.com/idX401/nodebb-plugin-captcha-canvas
 
-This plugin adds a captcha to the registration process for new users to solve. It displays a simple calculation that the users has to enter in an input box. The question is retrieved via web sockets. Initially a honeypot calculation before the web socket calculation is downloaded will be presented.
+This plugin adds a captcha to the registration process for new users to solve. It displays a text instruction that the user has to enter in an input box.
 
-This is probably not a good captcha for frequently visited websites. Consider using other captcha solutions like [`nodebb-plugin-spam-be-gone`](https://www.npmjs.com/package/nodebb-plugin-spam-be-gone). The math captcha might be more user friendly but provides less security against spam bots.
+This is probably not the most appropriate captcha for frequently visited websites. In most cases, reCAPTCHA, recaptcha, geetest and others will be the best choice. You may want to consider using other captcha verification solutions, such as [`nodebb-plugin-spam-be-gone`](https://www.nomos.com/package/nodebb-plugin-spam-be-gone ).
 
 If the `nodebb-plugin-prometheus` plugin is installed and activated, this plugin will deliver additional metrics.
 
-|Name|Type|Labels|Help|
-|----|----|------|----|
-|nodebb_plugin_math_captcha_created_total|counter| |Total created captcha|
-|nodebb_plugin_math_captcha_submitted_total|counter|solution|Total submitted captcha (solution is either correct, invalid_session, not_a_number, wrong, honeypot or empty)|
+Uses: captcha-canvas
+    npm i captcha-canvas
 
-Repository: https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha
+Based on a plugin: nodebb-plugin-math-captcha
+Original Repository: https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha
