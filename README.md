@@ -12,4 +12,5 @@ If the `nodebb-plugin-prometheus` plugin is installed and activated, this plugin
     npm i captcha-canvas
 
 Based on a plugin: nodebb-plugin-math-captcha
+
 Original Repository: https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha
