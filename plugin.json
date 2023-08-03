@@ -5,6 +5,7 @@
   "url": "https://github.com/idX401/nodebb-plugin-captcha-canvas",
   "library": "./library.js",
   "hooks": [
+    { "hook": "static:app.load", "method": "init" },
     { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
     { "hook": "filter:login.build", "method": "addCaptcha" },
     { "hook": "filter:register.build", "method": "addCaptcha" },
