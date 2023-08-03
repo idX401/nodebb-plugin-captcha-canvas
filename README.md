@@ -11,6 +11,9 @@ If the `nodebb-plugin-prometheus` plugin is installed and activated, this plugin
 # Uses: captcha-canvas
     npm i captcha-canvas
 
+# if crash
+    apt-get install libfontconfig1
+
 Based on a plugin: nodebb-plugin-math-captcha
 
 Original Repository: https://gitlab.com/cppnet/nodebb/nodebb-plugin-math-captcha
