@@ -120,7 +120,7 @@ plugin.checkCaptcha = function (data, callback) {
 
     if(sessionData && sessionData.uuid && sessionData.solution && sessionData.honeypotSolution) {
         let result = data.userData[sessionData.uuid];
-        if(result === sessionData.solution) {
+        if(result.toUpperCase() === sessionData.solution) {
             increaseCounter('correct');
             callback(null, data);
             return;
