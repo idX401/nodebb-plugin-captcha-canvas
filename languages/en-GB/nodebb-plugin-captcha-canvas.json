@@ -1,6 +1,5 @@
 {
   "label": "Captcha",
-  "solve": "Enter the solution of the expression: ",
   "solution_placeholder": "Solution",
   "failed": "Your entered solution for the captcha was wrong!",
   "admin_counter_name": "Counter name",
