@@ -8,7 +8,7 @@ This is probably not the most appropriate captcha for frequently visited website
 
 If the `nodebb-plugin-prometheus` plugin is installed and activated, this plugin will deliver additional metrics.
 
-Uses: captcha-canvas
+# Uses: captcha-canvas
     npm i captcha-canvas
 
 Based on a plugin: nodebb-plugin-math-captcha
