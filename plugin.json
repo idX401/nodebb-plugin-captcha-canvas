@@ -5,12 +5,11 @@
   "url": "https://github.com/idX401/nodebb-plugin-captcha-canvas",
   "library": "./library.js",
   "hooks": [
-    { "hook": "static:app.load", "method": "init" },
     { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
-    {"hook": "filter:login.build", "method": "addCaptcha", "priority": 5},
-    {"hook": "filter:register.build", "method": "addCaptcha", "priority": 5},
-    {"hook": "filter:login.check", "method": "checkCaptcha", "priority": 5},
-    {"hook": "filter:register.check", "method": "checkCaptcha", "priority": 5},
+    { "hook": "filter:login.build", "method": "addCaptcha" },
+    { "hook": "filter:register.build", "method": "addCaptcha" },
+    { "hook": "filter:login.check", "method": "checkCaptcha" },
+    { "hook": "filter:register.check", "method": "checkCaptcha" },
     { "hook": "action:nodebb-plugin-prometheus.init", "method": "initPrometheus" }
   ],
   "scripts": [
