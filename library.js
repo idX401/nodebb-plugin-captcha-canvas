@@ -85,19 +85,11 @@ plugin.addAdminNavigation = function (header, callback) {
 plugin.addCaptcha = function (data, callback) {
     const { image, text } = createCaptchaSync(300, 100);
     let imgBase64 = new Buffer(image).toString('base64');
-    
-    let results = {"invalid": [], "valid": []};
-    results.invalid.push('4+2');
-    results.invalid.push('6');
-    results.valid.push('1+1')
-    results.valid.push('2')
     let uuid = uuidv4();
     
     data.req.session["nodebb-plugin-captcha-canvas"] = {
         uuid: uuid,
-        problem: ';)',
-        solution: text,
-        honeypotSolution: '1+1+1'
+        solution: text
     };
 
     let captcha = {
@@ -115,9 +107,9 @@ plugin.addCaptcha = function (data, callback) {
         data.templateData.captcha = captcha;
     }
 
-    console.log(data);
-    console.log(uuid, results);
-    console.log(captcha);
+    //console.log(data);
+    //console.log(uuid, results);
+    //console.log(captcha);
     
     increaseCounter('created');
 
@@ -134,12 +126,13 @@ plugin.checkCaptcha = function (data, callback) {
             return;
         } else if(result === '') {
             increaseCounter('empty');
-        } else if(result === sessionData.honeypotSolution) {
-            increaseCounter('honeypot');
         }else{
             increaseCounter('wrong');
         }
         /*
+        else if(result === sessionData.honeypotSolution) {
+            increaseCounter('honeypot');
+        }
         else if(/^-?[0-9]+$/.test(result)) {
             increaseCounter('wrong');
         } else {
@@ -152,34 +145,6 @@ plugin.checkCaptcha = function (data, callback) {
 
     callback(new Error('[[nodebb-plugin-captcha-canvas:failed]]'));
 };
-
-function createCaptcha(callback) {
-    crypto.randomBytes(3, function (err, buf) {
-        if(err) {
-            callback(err);
-            return;
-        }
-
-        let isAddition = (buf[0] % 2) === 0;
-        let param1 = buf[1] % 50;
-        let param2 = buf[2] % 50;
-
-        let problem;
-        let solution;
-        if(isAddition === false && param1 < param2) {
-            solution = param2 - param1;
-            problem = param2 + ' - ' + param1;
-        } else if(isAddition) {
-            solution = param1 + param2;
-            problem = param1 + ' + ' + param2;
-        } else {
-            solution = param1 - param2;
-            problem = param1 + ' - ' + param2;
-        }
-
-        callback(null, problem, solution.toString());
-    });
-}
 
 function increaseCounter(type) {
     db.incrObjectField('nodebb-plugin-captcha-canvas:counters', type);
