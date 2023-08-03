@@ -15,11 +15,11 @@ const { createCaptchaSync } = require('captcha-canvas');
 let plugin = {};
 
 const possible_solutions = ['empty', 'honeypot', 'not_a_number', 'invalid_session', 'wrong', 'correct'];
-/*
+
 plugin.init = function(params, callback) {
     params.router.get('/admin/captcha-canvas', params.middleware.admin.buildHeader, renderAdmin);
     params.router.get('/api/admin/captcha-canvas', renderAdmin);
-
+    /*
     let socketPlugins = require.main.require('./src/socket.io/plugins');
     socketPlugins.canvasCaptcha = {
         getProblem: function(socket, params, callback) {
@@ -33,10 +33,9 @@ plugin.init = function(params, callback) {
             });
         }
     };
-
+    */
     callback();
 };
-*/
 
 plugin.initPrometheus = function(params) {
     db.getObject('nodebb-plugin-captcha-canvas:counters', function (err, counters) {
