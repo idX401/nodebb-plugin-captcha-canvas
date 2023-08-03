@@ -118,9 +118,9 @@ plugin.addCaptcha = function (data, callback) {
 plugin.checkCaptcha = function (data, callback) {
     let sessionData = data.req.session["nodebb-plugin-captcha-canvas"];
 
-    if(sessionData && sessionData.uuid && sessionData.solution && sessionData.honeypotSolution) {
+    if(sessionData && sessionData.uuid && sessionData.solution) {
         let result = data.userData[sessionData.uuid];
-        if(result === sessionData.solution) {
+        if(result.toUpperCase() === sessionData.solution) {
             increaseCounter('correct');
             callback(null, data);
             return;
